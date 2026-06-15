@@ -310,15 +310,15 @@
           </div>
         </div>
         <div class="row" style="margin-top: 16px;">
-          <button class="ghost" type="button" data-hint-button="hint-video">Подсказка по видео</button>
-          <button class="ghost" type="button" data-hint-button="hint-video-answer">Почти ответ по видео</button>
-          <button class="ghost" type="button" data-hint-button="hint-music">Подсказка по музыке</button>
-          <button class="ghost" type="button" data-hint-button="hint-music-answer">Почти ответ по музыке</button>
+          <button class="ghost" type="button" data-hint-button="hint-video">Подсказка</button>
+          <button class="ghost" type="button" data-hint-button="hint-video-answer">Ответ</button>
+          <button class="ghost" type="button" data-hint-button="hint-music">Подсказка</button>
+          <button class="ghost" type="button" data-hint-button="hint-music-answer">Ответ</button>
         </div>
-        <p class="hint" id="hint-video" hidden>Правильное видео связано с методом шифрования.</p>
-        <p class="hint" id="hint-video-answer" hidden>Нужный метод — Caesar Cipher.</p>
+        <p class="hint" id="hint-video" hidden>Правильное видео связано с методом шифрования, который нужен дальше.</p>
+        <p class="hint" id="hint-video-answer" hidden>Правильное видео: Caesar Cipher. Нужный метод: Caesar / ROT.</p>
         <p class="hint" id="hint-music" hidden>Правильный трек связан с финальным контактом.</p>
-        <p class="hint" id="hint-music-answer" hidden>Нужное слово — operator.</p>
+        <p class="hint" id="hint-music-answer" hidden>Правильный трек: Jim Croce — Operator. Третий фрагмент ключа: operator.</p>
       </section>
 
       <section aria-labelledby="go-trace">
@@ -355,15 +355,11 @@ func main() {
 }</code></pre>
         <p class="muted">В исходнике есть две строки для декодеров и число для сдвига. Компилировать ничего не нужно — достаточно прочитать код.</p>
         <div class="row" style="margin-top: 16px;">
-          <button class="ghost" type="button" data-hint-button="hint-go-packets">Подсказка 1</button>
-          <button class="ghost" type="button" data-hint-button="hint-go-methods">Подсказка 2</button>
-          <button class="ghost" type="button" data-hint-button="hint-go-shift">Подсказка 3</button>
-          <button class="ghost" type="button" data-hint-button="hint-go-answer">Почти ответ</button>
+          <button class="ghost" type="button" data-hint-button="hint-go">Подсказка</button>
+          <button class="ghost" type="button" data-hint-button="hint-go-answer">Ответ</button>
         </div>
-        <p class="hint" id="hint-go-packets" hidden>Нужные строки лежат в packets.</p>
-        <p class="hint" id="hint-go-methods" hidden>Для ROT нужна строка, где Method: "rot". Для Base64 нужна строка, где Method: "base64".</p>
-        <p class="hint" id="hint-go-shift" hidden>Сдвиг считается через функцию shift(): day + month.</p>
-        <p class="hint" id="hint-go-answer" hidden>16 + 6 = 22.</p>
+        <p class="hint" id="hint-go" hidden>Смотри на packets и функцию shift(). В packets лежат строки для декодеров, а shift() даёт число для сдвига.</p>
+        <p class="hint" id="hint-go-answer" hidden>Для ROT нужна строка: JVEKQIRX 1/3: WMKREP. Сдвиг: 16 + 6 = 22. Для Base64 нужна строка: RlJBR01FTlQgMi8zOiByZXN0b3JlZA==</p>
       </section>
 
       <section aria-labelledby="rot">
@@ -376,11 +372,11 @@ func main() {
             <input class="shift" id="rot-shift" type="number" min="0" max="25" placeholder="сдвиг">
             <button type="button" id="rot-button">Декодировать</button>
             <button class="ghost" type="button" data-hint-button="hint-rot">Подсказка</button>
-            <button class="ghost" type="button" data-hint-button="hint-rot-answer">Почти ответ</button>
+            <button class="ghost" type="button" data-hint-button="hint-rot-answer">Ответ</button>
           </div>
           <div class="result" id="rot-result" aria-live="polite"></div>
-          <p class="hint" id="hint-rot" hidden>Скопируй Data из объекта, где Method: "rot", и используй сдвиг из shift().</p>
-          <p class="hint" id="hint-rot-answer" hidden>Строка: JVEKQIRX 1/3: WMKREP, сдвиг: 22.</p>
+          <p class="hint" id="hint-rot" hidden>Вставь строку из Go trace, где Method: "rot". Сдвиг возьми из функции shift().</p>
+          <p class="hint" id="hint-rot-answer" hidden>Строка: JVEKQIRX 1/3: WMKREP. Сдвиг: 22. После декода получится: FRAGMENT 1/3: SIGNAL. Первый фрагмент ключа: signal.</p>
         </div>
       </section>
 
@@ -392,11 +388,11 @@ func main() {
           <div class="row">
             <button type="button" id="base64-button">Декодировать</button>
             <button class="ghost" type="button" data-hint-button="hint-base64">Подсказка</button>
-            <button class="ghost" type="button" data-hint-button="hint-base64-answer">Почти ответ</button>
+            <button class="ghost" type="button" data-hint-button="hint-base64-answer">Ответ</button>
           </div>
           <div class="result" id="base64-result" aria-live="polite"></div>
-          <p class="hint" id="hint-base64" hidden>Скопируй Data из объекта, где Method: "base64".</p>
-          <p class="hint" id="hint-base64-answer" hidden>Строка: RlJBR01FTlQgMi8zOiByZXN0b3JlZA==</p>
+          <p class="hint" id="hint-base64" hidden>Вставь строку из Go trace, где Method: "base64".</p>
+          <p class="hint" id="hint-base64-answer" hidden>Строка: RlJBR01FTlQgMi8zOiByZXN0b3JlZA==. После декода получится: FRAGMENT 2/3: restored. Второй фрагмент ключа: restored.</p>
         </div>
       </section>
 
@@ -410,9 +406,11 @@ func main() {
           <div class="row">
             <button type="button" id="key-button">Проверить ключ</button>
             <button class="ghost" type="button" data-hint-button="hint-key">Подсказка</button>
+            <button class="ghost" type="button" data-hint-button="hint-key-answer">Ответ</button>
           </div>
           <div class="result" id="key-result" aria-live="polite"></div>
-          <p class="hint" id="hint-key" hidden>Собери слова из трёх следов маленькими буквами через дефис: signal-restored-operator.</p>
+          <p class="hint" id="hint-key" hidden>Фрагменты идут в порядке: ROT → Base64 → музыка.</p>
+          <p class="hint" id="hint-key-answer" hidden>Финальный ключ: signal-restored-operator.</p>
         </div>
 
         <div class="final" id="final-block" hidden>
