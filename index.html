@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BB_1606 // Birthday Signal</title>
+<style>
+:root{--bg:#07080a;--panel:#101114;--panel2:#090a0c;--text:#f0f0f0;--muted:#8f969f;--line:#2a2d31;--good:#baffc4;--bad:#ffb4b4;--accent:#e8e8e8}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at top,#1b1d24 0,#0a0b0e 42%,#030303 100%);color:var(--text);font-family:Consolas,Menlo,Monaco,monospace;padding:18px;min-height:100vh}.wrap{max-width:980px;margin:0 auto}.top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;letter-spacing:2px;margin:10px 0 18px}.panel{border:1px solid var(--line);background:rgba(16,17,20,.9);box-shadow:0 0 60px rgba(0,0,0,.65);padding:28px;margin:18px 0;position:relative;overflow:hidden}.panel:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.022),rgba(255,255,255,.022) 1px,transparent 1px,transparent 8px);pointer-events:none}.content{position:relative}h1{font-size:48px;letter-spacing:5px;font-weight:400;margin:0 0 10px}h2{font-size:22px;font-weight:400;margin:0 0 16px}.muted{color:var(--muted);line-height:1.6}.big{font-size:18px;line-height:1.65}.grid{display:grid;grid-template-columns:1fr;gap:14px}@media(min-width:780px){.grid.two{grid-template-columns:1fr 1fr}}.box{border:1px solid var(--line);background:var(--panel2);padding:16px;margin:12px 0;line-height:1.55}.btn{display:inline-block;background:var(--accent);color:#000;border:0;padding:11px 15px;font-family:inherit;cursor:pointer;margin:6px 6px 6px 0;text-decoration:none}.btn.dark{background:#1b1d21;color:#eee;border:1px solid #444}.btn.small{padding:8px 10px;font-size:13px}input,textarea{width:100%;background:#050505;color:#fff;border:1px solid #444;padding:13px;font-family:inherit;font-size:16px;margin:8px 0}.out{white-space:pre-wrap;background:#050505;border:1px solid #222;padding:12px;min-height:42px;margin-top:8px}.hint{display:none;border:1px solid #3c3f45;background:#070707;padding:12px;margin:8px 0;color:#ddd;line-height:1.55}.hidden{display:none}.ok{color:var(--good)}.bad{color:var(--bad)}a{color:#fff;text-decoration:underline}.qr{max-width:520px;width:100%;display:block;margin:18px auto;border:1px solid #333}.stepnum{color:#777}.code{background:#050505;border:1px solid #333;padding:2px 6px;color:#fff}.footer{color:#666;font-size:13px;margin:28px 0}.media-list{margin:0;padding-left:20px}.media-list li{margin:8px 0}.go{font-size:14px;overflow:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><span>BB_1606</span><span>SYS: ONLINE // 16.06</span></div>
+<section class="panel" id="start"><div class="content">
+<h1>BB_1606</h1>
+<p class="muted">birthday signal // blackbox recovery // final handoff</p>
+<p class="big">Олег, с днём рождения.</p>
+<p class="big">Я попытался сделать что-то на подобии Цикады 3310, но без лишней боли. Здесь будет короткий цифровой квест: видео, музыка, простой шифр, немного Go-вайба и финальный оператор.</p>
+<p class="muted">Компилятор Go не нужен. Всё можно пройти прямо на этой странице. Подсказки открываются только если ты сам нажмёшь.</p>
+<a class="btn" href="#mission">Начать</a>
+</div></section>
+<section class="panel" id="mission"><div class="content">
+<h2><span class="stepnum">01</span> // что происходит</h2>
+<div class="grid two"><div class="box"><b>Цель:</b><br>восстановить финальный ключ доступа.</div><div class="box"><b>Финал:</b><br>QR-код приведёт к оператору, который вручит подарок.</div></div>
+<p class="muted">Ключ состоит из трёх фрагментов. Формат финального ключа:</p><p><span class="code">fragment1-fragment2-fragment3</span></p>
+<a class="btn" href="#media">К медиа-следам</a>
+</div></section>
+<section class="panel" id="media"><div class="content">
+<h2><span class="stepnum">02</span> // медиа-следы</h2>
+<p class="muted">Не нужно смотреть всё целиком. Ищи смысл в названиях. Один видеоролик подсказывает метод шифрования, один трек подсказывает финальный контакт.</p>
+<div class="grid two"><div class="box"><b>Видео</b><ol class="media-list">
+<li><a target="_blank" href="https://www.youtube.com/watch?v=I2O7blSSzpI">Cicada 3301: An Internet Mystery</a></li>
+<li><a target="_blank" href="https://www.youtube.com/watch?v=JtbKh_12ctg">Caesar Cipher</a></li>
+<li><a target="_blank" href="https://www.youtube.com/watch?v=zWlI2ztER7o">UVB-76 / The Buzzer</a></li>
+<li><a target="_blank" href="https://www.youtube.com/watch?v=e_Ue_P7vcRE">Blackbox Life Recorder 21f</a></li>
+</ol></div><div class="box"><b>Музыка</b><ol class="media-list">
+<li><a target="_blank" href="https://www.youtube.com/watch?v=b0q5PR1xpA0">LEMMiNO — Cipher</a></li>
+<li><a target="_blank" href="https://www.youtube.com/watch?v=kyIvtzvxfhE">Aphex Twin — Blackbox Life Recorder 21f</a></li>
+<li><a target="_blank" href="https://www.youtube.com/watch?v=khYxP7TiFSA">Jim Croce — Operator</a></li>
+<li><a target="_blank" href="https://www.youtube.com/watch?v=D_8Pma1vHmw">Kraftwerk — The Robots</a></li>
+</ol></div></div>
+<button class="btn dark small" onclick="show('hintMedia1')">Подсказка по видео</button><button class="btn dark small" onclick="show('hintMedia2')">Подсказка по музыке</button>
+<div id="hintMedia1" class="hint">В видео нужен ролик, название которого прямо говорит, какой шифр использовать.</div>
+<div id="hintMedia2" class="hint">В музыке нужен трек, название которого связано с человеком, к которому нужно обратиться в финале.</div>
+<a class="btn" href="#cipher">К шифру</a>
+</div></section>
+<section class="panel" id="cipher"><div class="content">
+<h2><span class="stepnum">03</span> // Go trace</h2>
+<p class="muted">Это не нужно компилировать. Это просто Go-след, который показывает параметры.</p>
+<div class="box go"><pre>package main
+
+const birthday = "16.06"
+const revision = 22
+
+var payload = "JVEKQIRX 1/3: WMKREP"
+
+func main() {
+    // not every answer needs a compiler
+    // sometimes source is enough
+}</pre></div>
+<p class="muted">Используй метод, который нашёл в видео, и число <span class="code">revision</span>.</p>
+<textarea id="caesarInput" rows="2">JVEKQIRX 1/3: WMKREP</textarea><input id="shift" type="number" value="22">
+<button class="btn" onclick="decodeCaesar()">Декодировать ROT / Цезарь</button><div id="caesarOut" class="out"></div>
+<button class="btn dark small" onclick="show('hintCipher1')">Подсказка 1</button><button class="btn dark small" onclick="show('hintCipher2')">Почти ответ</button>
+<div id="hintCipher1" class="hint">revision = 22. Значит сдвиг 22.</div><div id="hintCipher2" class="hint">После декода должен появиться первый фрагмент: <span class="code">signal</span>.</div>
+<a class="btn" href="#base64">К следующему блоку</a>
+</div></section>
+<section class="panel" id="base64"><div class="content">
+<h2><span class="stepnum">04</span> // закодированный блок</h2>
+<p class="muted">Один фрагмент сохранён в другом виде. Метод указан в списке методов.</p>
+<textarea id="b64Input" rows="2">RlJBR01FTlQgMi8zOiByZXN0b3JlZA==</textarea>
+<button class="btn" onclick="decodeBase64()">Декодировать Base64</button><div id="b64Out" class="out"></div>
+<button class="btn dark small" onclick="show('hintB64')">Подсказка</button><div id="hintB64" class="hint">Это Base64. После декода появится второй фрагмент: <span class="code">restored</span>.</div>
+<a class="btn" href="#finalkey">Собрать ключ</a>
+</div></section>
+<section class="panel" id="finalkey"><div class="content">
+<h2><span class="stepnum">05</span> // финальный ключ</h2>
+<p class="muted">Третий фрагмент даёт музыка. Нужен трек, связанный с финальным контактом. Ответ одним словом на английском, маленькими буквами.</p>
+<p class="muted">Собери ключ:</p><p><span class="code">fragment1-fragment2-fragment3</span></p>
+<input id="finalInput" placeholder="введи финальный ключ"><button class="btn" onclick="checkFinal()">Проверить</button>
+<button class="btn dark small" onclick="show('hintFinal1')">Подсказка 1</button><button class="btn dark small" onclick="show('hintFinal2')">Почти ответ</button>
+<div id="finalResult" class="hint"></div><div id="hintFinal1" class="hint">Фрагменты идут так: шифр → Base64 → музыка.</div><div id="hintFinal2" class="hint">Ключ выглядит так: <span class="code">signal-restored-operator</span>.</div>
+</div></section>
+<section class="panel hidden" id="handoff"><div class="content">
+<h2><span class="stepnum">06</span> // доступ подтверждён</h2><p class="ok">Чёрный ящик восстановлен. Финальный оператор найден.</p>
+<img class="qr" src="operator_1606.png" alt="QR на финального оператора"><p>Отправь оператору фразу доступа:</p><p><span class="code">BB-1606-22</span></p>
+</div></section>
+<div class="footer">BB_1606 // signal restored // happy birthday</div>
+</div>
+<script>
+function show(id){document.getElementById(id).style.display='block'}
+function rotChar(ch,shift){const A='ABCDEFGHIJKLMNOPQRSTUVWXYZ',a='abcdefghijklmnopqrstuvwxyz';let i=A.indexOf(ch);if(i>=0)return A[(i+shift+26)%26];i=a.indexOf(ch);if(i>=0)return a[(i+shift+26)%26];return ch}
+function decodeCaesar(){const t=document.getElementById('caesarInput').value;const s=parseInt(document.getElementById('shift').value||'0',10);document.getElementById('caesarOut').textContent=[...t].map(c=>rotChar(c,-s)).join('')}
+function decodeBase64(){const t=document.getElementById('b64Input').value.trim();try{const bytes=Uint8Array.from(atob(t),c=>c.charCodeAt(0));document.getElementById('b64Out').textContent=new TextDecoder('utf-8').decode(bytes)}catch(e){document.getElementById('b64Out').textContent='Ошибка декодирования'}}
+function norm(s){return (s||'').trim().toLowerCase().replace(/\s+/g,'')}
+function checkFinal(){const ok='signal-restored-operator';const v=norm(document.getElementById('finalInput').value);const r=document.getElementById('finalResult');r.style.display='block';if(v===ok){r.innerHTML='<span class="ok">access confirmed.</span>';document.getElementById('handoff').classList.remove('hidden');document.getElementById('handoff').scrollIntoView({behavior:'smooth'})}else{r.innerHTML='<span class="bad">access denied.</span> Проверь фрагменты и дефисы.'}}
+</script>
+</body>
+</html>
