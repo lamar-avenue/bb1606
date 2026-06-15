@@ -324,51 +324,64 @@
 
       <section aria-labelledby="go-trace">
         <h2 id="go-trace">Go trace</h2>
-        <p>Просто прочитай код. Компилировать его не нужно. Внутри спрятаны строки для декодеров и число для сдвига.</p>
+        <p>Это не задача на компиляцию. Код нужно просто прочитать как набор следов. Часть значений нужно склеить в одну строку, часть — использовать как число для сдвига, а один след выглядит как закодированный пакет.</p>
         <pre><code>package main
 
-const day = 16
-const month = 6
-
-type Packet struct {
-  Method string
-  Data   string
+type Trace struct {
+  Name  string
+  Value string
 }
 
-var packets = []Packet{
+var blackbox = []Trace{
   {
-    Method: "rot",
-    Data:   "JVEKQIRX 1/3: WMKREP",
+    Name:  "date.day",
+    Value: "16",
   },
   {
-    Method: "base64",
-    Data:   "RlJBR01FTlQgMi8zOiByZXN0b3JlZA==",
+    Name:  "date.month",
+    Value: "6",
+  },
+  {
+    Name:  "message.part.1",
+    Value: "JVEKQIRX",
+  },
+  {
+    Name:  "message.part.2",
+    Value: "1/3:",
+  },
+  {
+    Name:  "message.part.3",
+    Value: "WMKREP",
+  },
+  {
+    Name:  "packet.locked",
+    Value: "RlJBR01FTlQgMi8zOiByZXN0b3JlZA==",
   },
 }
 
-func shift() int {
-  return day + month
+func offset() int {
+  return 16 + 6
 }
 
 func main() {
   // no compiler needed
-  // read the source
+  // read the trace
 }</code></pre>
-        <p class="muted">В исходнике есть две строки для декодеров и число для сдвига. Компилировать ничего не нужно — достаточно прочитать код.</p>
+        <p class="muted">Если следы пока не складываются, открой подсказку ниже.</p>
         <div class="row" style="margin-top: 16px;">
           <button class="ghost" type="button" data-hint-button="hint-go">Подсказка</button>
           <button class="ghost" type="button" data-hint-button="hint-go-answer">Ответ</button>
         </div>
-        <p class="hint" id="hint-go" hidden>Смотри на packets и функцию shift(). В packets лежат строки для декодеров, а shift() даёт число для сдвига.</p>
-        <p class="hint" id="hint-go-answer" hidden>Для ROT нужна строка: JVEKQIRX 1/3: WMKREP. Сдвиг: 16 + 6 = 22. Для Base64 нужна строка: RlJBR01FTlQgMi8zOiByZXN0b3JlZA==</p>
+        <p class="hint" id="hint-go" hidden>Смотри на названия следов. Одни части относятся к дате, другие — к сообщению, ещё одна — к закрытому пакету.</p>
+        <p class="hint" id="hint-go-answer" hidden>Для сдвига: 16 + 6 = 22. Для ROT нужно склеить message.part.1, message.part.2 и message.part.3. Для Base64 нужен packet.locked.</p>
       </section>
 
       <section aria-labelledby="rot">
         <h2 id="rot">ROT / Цезарь декодер</h2>
         <div class="tool">
-          <p class="muted">Скопируй сюда значение Data из объекта, где Method: "rot". Сдвиг возьми из функции shift() в Go trace.</p>
+          <p class="muted">Найди в Go trace фрагменты, которые выглядят как части одного сообщения. Собери их в одну строку и попробуй расшифровать сдвигом.</p>
           <label for="rot-input">Текст</label>
-          <textarea id="rot-input" placeholder='вставь строку с Method: "rot"'></textarea>
+          <textarea id="rot-input" placeholder="вставь собранное сообщение"></textarea>
           <div class="row">
             <label for="rot-shift">Сдвиг</label>
             <input class="shift" id="rot-shift" type="number" min="0" max="25" placeholder="сдвиг">
@@ -377,25 +390,25 @@ func main() {
             <button class="ghost" type="button" data-hint-button="hint-rot-answer">Ответ</button>
           </div>
           <div class="result" id="rot-result" aria-live="polite"></div>
-          <p class="hint" id="hint-rot" hidden>Вставь строку из Go trace, где Method: "rot". Сдвиг возьми из функции shift().</p>
-          <p class="hint" id="hint-rot-answer" hidden>Строка: JVEKQIRX 1/3: WMKREP. Сдвиг: 22. После декода получится: FRAGMENT 1/3: SIGNAL. Первый фрагмент ключа: signal.</p>
+          <p class="hint" id="hint-rot" hidden>В Go trace есть несколько строк с похожим названием. Они идут по порядку.</p>
+          <p class="hint" id="hint-rot-answer" hidden>Нужно склеить: JVEKQIRX 1/3: WMKREP. Сдвиг: 22. Результат: FRAGMENT 1/3: SIGNAL. Первый фрагмент ключа: signal.</p>
         </div>
       </section>
 
       <section aria-labelledby="base64">
         <h2 id="base64">Base64 декодер</h2>
         <div class="tool">
-          <p class="muted">Скопируй сюда значение Data из объекта, где Method: "base64". Затем нажми “Декодировать”.</p>
+          <p class="muted">Найди в Go trace строку, которая больше похожа на закодированный пакет, чем на обычный текст.</p>
           <label for="base64-input">Текст</label>
-          <textarea id="base64-input" placeholder='вставь строку с Method: "base64"'></textarea>
+          <textarea id="base64-input" placeholder="вставь закодированный пакет"></textarea>
           <div class="row">
             <button type="button" id="base64-button">Декодировать</button>
             <button class="ghost" type="button" data-hint-button="hint-base64">Подсказка</button>
             <button class="ghost" type="button" data-hint-button="hint-base64-answer">Ответ</button>
           </div>
           <div class="result" id="base64-result" aria-live="polite"></div>
-          <p class="hint" id="hint-base64" hidden>Вставь строку из Go trace, где Method: "base64".</p>
-          <p class="hint" id="hint-base64-answer" hidden>Строка: RlJBR01FTlQgMi8zOiByZXN0b3JlZA==. После декода получится: FRAGMENT 2/3: restored. Второй фрагмент ключа: restored.</p>
+          <p class="hint" id="hint-base64" hidden>Нужная строка выглядит как длинный набор латинских букв и символов. В конце у неё есть ==.</p>
+          <p class="hint" id="hint-base64-answer" hidden>Нужная строка: RlJBR01FTlQgMi8zOiByZXN0b3JlZA==. Результат: FRAGMENT 2/3: restored. Второй фрагмент ключа: restored.</p>
         </div>
       </section>
 
