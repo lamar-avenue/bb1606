@@ -385,11 +385,8 @@ func main() {
 
         <div class="final" id="final-block" hidden>
           <h3>Доступ открыт</h3>
-          <p>Отсканируй QR-код и отправь фразу доступа.</p>
+          <p>Отсканируй QR-код.</p>
           <img class="operator-image" id="operator-image" src="operator_1606.png" alt="QR-код">
-          <p class="image-missing" id="image-missing">Файл operator_1606.png не найден рядом с index.html. Резервный канал ниже активен.</p>
-          <p class="keyline">Фраза доступа: BB-1606-22</p>
-          <p><a href="https://t.me/bakudo88" target="_blank" rel="noopener noreferrer">Открыть Telegram</a></p>
         </div>
       </section>
 
@@ -455,7 +452,7 @@ func main() {
         var value = input.value.trim().toLowerCase();
         var finalBlock = document.getElementById("final-block");
         if (value === finalKey) {
-          setResult("key-result", "ACCESS GRANTED: final handoff unlocked.");
+          setResult("key-result", "");
           finalBlock.removeAttribute("hidden");
           finalBlock.scrollIntoView({ behavior: "smooth", block: "nearest" });
         } else {
@@ -473,7 +470,6 @@ func main() {
 
       document.getElementById("operator-image").addEventListener("error", function () {
         this.style.display = "none";
-        document.getElementById("image-missing").style.display = "block";
       });
     }());
   </script>
