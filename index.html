@@ -324,56 +324,65 @@
 
       <section aria-labelledby="go-trace">
         <h2 id="go-trace">Go trace</h2>
-        <p>Код ниже — это набор следов. Некоторые значения нужно склеить в одну строку, одно значение поможет получить число для сдвига, а один из наборов выглядит как закодированный пакет.</p>
+        <p>Это не задача на компиляцию. Код нужно прочитать как схему восстановления. В нём есть структура, которая хранит данные, и методы, которые показывают, что из этих данных можно получить.</p>
         <pre><code>package main
 
-var trace = map[string][]string{
-  "seed": {
-    "16",
-    "6",
-  },
-  "alpha": {
-    "JVE",
-    "KQ",
-    "IRX",
-    " 1/3: ",
-    "WM",
-    "KREP",
-  },
-  "beta": {
-    "RlJBR",
-    "01FTl",
-    "QgMi",
-    "8zOi",
-    "ByZX",
-    "N0b3",
-    "JlZA==",
-  },
+import "strings"
+
+type BlackBox struct {
+  Day    int
+  Month  int
+  First  []string
+  Second string
 }
 
-func offset() int {
-  return 16 + 6
+func NewBlackBox() BlackBox {
+  return BlackBox{
+    Day:   16,
+    Month: 6,
+    First: []string{
+      "JVEKQIRX",
+      "1/3:",
+      "WMKREP",
+    },
+    Second: "RlJBR01FTlQgMi8zOiByZXN0b3JlZA==",
+  }
+}
+
+func (b BlackBox) Offset() int {
+  return b.Day + b.Month
+}
+
+func (b BlackBox) Signal() string {
+  return strings.Join(b.First, " ")
+}
+
+func (b BlackBox) Packet() string {
+  return b.Second
 }
 
 func main() {
-  // no compiler needed
-  // read the trace
+  box := NewBlackBox()
+
+  _ = box.Offset()
+  _ = box.Signal()
+  _ = box.Packet()
 }</code></pre>
         <p class="muted">Если следы пока не складываются, открой подсказку ниже.</p>
         <div class="row" style="margin-top: 16px;">
           <button class="ghost" type="button" data-hint-button="hint-go">Подсказка</button>
           <button class="ghost" type="button" data-hint-button="hint-go-answer">Ответ</button>
         </div>
-        <p class="hint" id="hint-go" hidden>Смотри на группы trace. В одной группе лежит число, в двух других — строки.</p>
-        <p class="hint" id="hint-go-answer" hidden>seed даёт 16 + 6 = 22. alpha нужно склеить для ROT. beta нужно склеить для Base64.</p>
+        <p class="hint" id="hint-go" hidden>Посмотри на методы структуры BlackBox. Они не просто так называются Offset, Signal и Packet.</p>
+        <p class="hint" id="hint-go-answer" hidden>Offset() даёт 22. Signal() даёт JVEKQIRX 1/3: WMKREP. Packet() даёт RlJBR01FTlQgMi8zOiByZXN0b3JlZA==.</p>
       </section>
 
       <section aria-labelledby="rot">
         <h2 id="rot">ROT / Цезарь декодер</h2>
         <div class="tool">
-          <p class="muted">Найди в Go trace набор, который после склейки выглядит как короткая нечитаемая фраза. Для сдвига используй число, которое получается из кода.</p>
+          <p class="muted">В Go trace есть метод, который собирает первый сигнал. Используй результат этого метода как текст для декодера. Число для сдвига тоже получается из Go trace.</p>
           <label for="rot-input">Текст</label>
-          <textarea id="rot-input" placeholder="вставь собранную строку"></textarea>
+          <textarea id="rot-input" placeholder="вставь сигнал"></textarea>
           <div class="row">
             <label for="rot-shift">Сдвиг</label>
             <input class="shift" id="rot-shift" type="number" min="0" max="25" placeholder="сдвиг">
@@ -382,25 +391,25 @@ func main() {
             <button class="ghost" type="button" data-hint-button="hint-rot-answer">Ответ</button>
           </div>
           <div class="result" id="rot-result" aria-live="polite"></div>
-          <p class="hint" id="hint-rot" hidden>Нужная группа состоит из коротких кусков. После склейки там будет 1/3.</p>
-          <p class="hint" id="hint-rot-answer" hidden>alpha = JVEKQIRX 1/3: WMKREP. Сдвиг = 22. Результат: FRAGMENT 1/3: SIGNAL.</p>
+          <p class="hint" id="hint-rot" hidden>Нужная строка получается из метода Signal(). Сдвиг получается из метода Offset().</p>
+          <p class="hint" id="hint-rot-answer" hidden>Текст: JVEKQIRX 1/3: WMKREP. Сдвиг: 22. Результат: FRAGMENT 1/3: SIGNAL. Первый фрагмент ключа: signal.</p>
         </div>
       </section>
 
       <section aria-labelledby="base64">
         <h2 id="base64">Base64 декодер</h2>
         <div class="tool">
-          <p class="muted">Найди в Go trace набор, который после склейки похож на длинный закодированный пакет.</p>
+          <p class="muted">В Go trace есть метод, который возвращает закрытый пакет. Если строка выглядит как кодировка, попробуй декодировать её здесь.</p>
           <label for="base64-input">Текст</label>
-          <textarea id="base64-input" placeholder="вставь собранный пакет"></textarea>
+          <textarea id="base64-input" placeholder="вставь пакет"></textarea>
           <div class="row">
             <button type="button" id="base64-button">Декодировать</button>
             <button class="ghost" type="button" data-hint-button="hint-base64">Подсказка</button>
             <button class="ghost" type="button" data-hint-button="hint-base64-answer">Ответ</button>
           </div>
           <div class="result" id="base64-result" aria-live="polite"></div>
-          <p class="hint" id="hint-base64" hidden>Нужная группа выглядит как длинная строка из латинских букв и заканчивается на ==.</p>
-          <p class="hint" id="hint-base64-answer" hidden>beta = RlJBR01FTlQgMi8zOiByZXN0b3JlZA==. Результат: FRAGMENT 2/3: restored.</p>
+          <p class="hint" id="hint-base64" hidden>Нужная строка получается из метода Packet().</p>
+          <p class="hint" id="hint-base64-answer" hidden>Строка: RlJBR01FTlQgMi8zOiByZXN0b3JlZA==. Результат: FRAGMENT 2/3: restored. Второй фрагмент ключа: restored.</p>
         </div>
       </section>
 
