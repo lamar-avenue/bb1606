@@ -323,34 +323,64 @@
 
       <section aria-labelledby="go-trace">
         <h2 id="go-trace">Go trace</h2>
-        <p>Это не поле для ввода и не задача на компиляцию. Этот блок нужно просто прочитать. В исходнике уже есть данные для следующего шага: revision и payload.</p>
+        <p>Это не поле для ввода и не задача на компиляцию. Этот блок нужно просто прочитать.</p>
         <pre><code>package main
 
-const birthday = "16.06"
-const revision = 22
+const day = 16
+const month = 6
 
-var payload = "JVEKQIRX 1/3: WMKREP"
+type Packet struct {
+  Method string
+  Data   string
+}
+
+var packets = []Packet{
+  {
+    Method: "rot",
+    Data:   "JVEKQIRX 1/3: WMKREP",
+  },
+  {
+    Method: "base64",
+    Data:   "RlJBR01FTlQgMi8zOiByZXN0b3JlZA==",
+  },
+}
+
+func shift() int {
+  return day + month
+}
 
 func main() {
-// not every answer needs a compiler
-// sometimes source is enough
+  // no compiler needed
+  // read the source
 }</code></pre>
-        <p class="muted">revision = 22 — это сдвиг для ROT / Цезаря. payload — это строка, которую нужно декодировать ниже.</p>
+        <p class="muted">В исходнике есть две строки для декодеров и число для сдвига. Компилировать ничего не нужно — достаточно прочитать код.</p>
+        <div class="row" style="margin-top: 16px;">
+          <button class="ghost" type="button" data-hint-button="hint-go-packets">Подсказка 1</button>
+          <button class="ghost" type="button" data-hint-button="hint-go-methods">Подсказка 2</button>
+          <button class="ghost" type="button" data-hint-button="hint-go-shift">Подсказка 3</button>
+          <button class="ghost" type="button" data-hint-button="hint-go-answer">Почти ответ</button>
+        </div>
+        <p class="hint" id="hint-go-packets" hidden>Нужные строки лежат в packets.</p>
+        <p class="hint" id="hint-go-methods" hidden>Для ROT нужна строка, где Method: "rot". Для Base64 нужна строка, где Method: "base64".</p>
+        <p class="hint" id="hint-go-shift" hidden>Сдвиг считается через функцию shift(): day + month.</p>
+        <p class="hint" id="hint-go-answer" hidden>16 + 6 = 22.</p>
       </section>
 
       <section aria-labelledby="rot">
         <h2 id="rot">ROT / Цезарь декодер</h2>
         <div class="tool">
           <label for="rot-input">Текст</label>
-          <textarea id="rot-input">JVEKQIRX 1/3: WMKREP</textarea>
+          <textarea id="rot-input" placeholder='вставь строку с Method: "rot"'></textarea>
           <div class="row">
             <label for="rot-shift">Сдвиг</label>
-            <input class="shift" id="rot-shift" type="number" min="0" max="25" value="22">
+            <input class="shift" id="rot-shift" type="number" min="0" max="25" placeholder="сдвиг">
             <button type="button" id="rot-button">Декодировать</button>
             <button class="ghost" type="button" data-hint-button="hint-rot">Подсказка</button>
+            <button class="ghost" type="button" data-hint-button="hint-rot-answer">Почти ответ</button>
           </div>
           <div class="result" id="rot-result" aria-live="polite"></div>
-          <p class="hint" id="hint-rot" hidden>Для этого следа нужен сдвиг 22. После декодирования первый фрагмент будет SIGNAL.</p>
+          <p class="hint" id="hint-rot" hidden>Скопируй Data из объекта, где Method: "rot", и используй сдвиг из shift().</p>
+          <p class="hint" id="hint-rot-answer" hidden>Строка: JVEKQIRX 1/3: WMKREP, сдвиг: 22.</p>
         </div>
       </section>
 
@@ -358,13 +388,15 @@ func main() {
         <h2 id="base64">Base64 декодер</h2>
         <div class="tool">
           <label for="base64-input">Текст</label>
-          <textarea id="base64-input">RlJBR01FTlQgMi8zOiByZXN0b3JlZA==</textarea>
+          <textarea id="base64-input" placeholder='вставь строку с Method: "base64"'></textarea>
           <div class="row">
             <button type="button" id="base64-button">Декодировать</button>
             <button class="ghost" type="button" data-hint-button="hint-base64">Подсказка</button>
+            <button class="ghost" type="button" data-hint-button="hint-base64-answer">Почти ответ</button>
           </div>
           <div class="result" id="base64-result" aria-live="polite"></div>
-          <p class="hint" id="hint-base64" hidden>Base64 часто выглядит как строка с буквами, цифрами и знаками равно в конце. Здесь он отдаёт второй фрагмент.</p>
+          <p class="hint" id="hint-base64" hidden>Скопируй Data из объекта, где Method: "base64".</p>
+          <p class="hint" id="hint-base64-answer" hidden>Строка: RlJBR01FTlQgMi8zOiByZXN0b3JlZA==</p>
         </div>
       </section>
 
