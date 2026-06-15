@@ -67,35 +67,6 @@
       box-shadow: 0 0 36px var(--shadow);
     }
 
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--line);
-      background: #070a0b;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .dots {
-      display: flex;
-      gap: 8px;
-      flex: 0 0 auto;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--line);
-    }
-
-    .dot.red { background: var(--red); }
-    .dot.amber { background: var(--amber); }
-    .dot.green { background: var(--green-dim); }
-
     header,
     section {
       padding: 26px;
@@ -338,30 +309,15 @@
       .media-grid {
         grid-template-columns: 1fr;
       }
-
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
     }
   </style>
 </head>
 <body>
   <main class="shell">
     <div class="frame" role="application" aria-label="BB_1606 terminal">
-      <div class="topbar">
-        <div class="dots" aria-hidden="true">
-          <span class="dot red"></span>
-          <span class="dot amber"></span>
-          <span class="dot green"></span>
-        </div>
-        <span>blackbox://bb_1606/final-handoff</span>
-        <span>status: signal waiting</span>
-      </div>
-
       <header>
         <h1>BB_1606</h1>
-        <p class="lead">Олег, с днём рождения. Это небольшой цифровой квест в духе Цикады 3310, но без лишних страданий.</p>
+        <p class="lead">Я попытался сделать что-то на подобии Цикады 3310. Здесь будет короткий квест: шифры, странные ссылки, музыка, картинки, подсказки.</p>
         <p>В конце тебя ждёт финальный оператор, который вручит подарок. Компилятор Go не нужен: здесь достаточно внимания, пары декодеров и хорошего чувства сигнала.</p>
       </header>
 
