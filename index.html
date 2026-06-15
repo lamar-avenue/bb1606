@@ -259,12 +259,6 @@
       color: var(--muted);
     }
 
-    .footer-note {
-      padding-top: 18px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
     @media (max-width: 760px) {
       .shell {
         width: min(100% - 20px, 1060px);
@@ -294,7 +288,7 @@
 
       <section aria-labelledby="media">
         <h2 id="media">Медиа-следы</h2>
-        <p>Среди видео нужно найти ролик, название которого подсказывает метод шифрования. Среди музыки нужно найти трек, название которого связано с финальным контактом.</p>
+        <p>Среди ссылок есть нужные. Не все они ведут к ответу. Твоя задача — понять, какая ссылка подходит по смыслу к следующему шагу.</p>
         <div class="media-grid">
           <div>
             <h3>Видео</h3>
@@ -302,28 +296,34 @@
               <li><a href="https://www.youtube.com/watch?v=I2O7blSSzpI" target="_blank" rel="noopener noreferrer">Cicada 3301: An Internet Mystery</a></li>
               <li><a href="https://www.youtube.com/watch?v=JtbKh_12ctg" target="_blank" rel="noopener noreferrer">Caesar Cipher</a></li>
               <li><a href="https://www.youtube.com/watch?v=zWlI2ztER7o" target="_blank" rel="noopener noreferrer">UVB-76 / The Buzzer</a></li>
-              <li><a href="https://www.youtube.com/watch?v=e_Ue_P7vcRE" target="_blank" rel="noopener noreferrer">Aphex Twin - Blackbox Life Recorder 21f</a></li>
+              <li><a href="https://www.youtube.com/watch?v=e_Ue_P7vcRE" target="_blank" rel="noopener noreferrer">Aphex Twin — Blackbox Life Recorder 21f</a></li>
             </ul>
           </div>
           <div>
             <h3>Музыка</h3>
             <ul>
-              <li><a href="https://www.youtube.com/watch?v=b0q5PR1xpA0" target="_blank" rel="noopener noreferrer">LEMMiNO - Cipher</a></li>
-              <li><a href="https://www.youtube.com/watch?v=kyIvtzvxfhE" target="_blank" rel="noopener noreferrer">Aphex Twin - Blackbox Life Recorder 21f</a></li>
-              <li><a href="https://www.youtube.com/watch?v=khYxP7TiFSA" target="_blank" rel="noopener noreferrer">Jim Croce - Operator</a></li>
-              <li><a href="https://www.youtube.com/watch?v=D_8Pma1vHmw" target="_blank" rel="noopener noreferrer">Kraftwerk - The Robots</a></li>
+              <li><a href="https://www.youtube.com/watch?v=b0q5PR1xpA0" target="_blank" rel="noopener noreferrer">LEMMiNO — Cipher</a></li>
+              <li><a href="https://www.youtube.com/watch?v=kyIvtzvxfhE" target="_blank" rel="noopener noreferrer">Aphex Twin — Blackbox Life Recorder 21f</a></li>
+              <li><a href="https://www.youtube.com/watch?v=khYxP7TiFSA" target="_blank" rel="noopener noreferrer">Jim Croce — Operator</a></li>
+              <li><a href="https://www.youtube.com/watch?v=D_8Pma1vHmw" target="_blank" rel="noopener noreferrer">Kraftwerk — The Robots</a></li>
             </ul>
           </div>
         </div>
         <div class="row" style="margin-top: 16px;">
-          <button class="ghost" type="button" data-hint-button="hint-media">Подсказка</button>
+          <button class="ghost" type="button" data-hint-button="hint-video">Подсказка по видео</button>
+          <button class="ghost" type="button" data-hint-button="hint-video-answer">Почти ответ по видео</button>
+          <button class="ghost" type="button" data-hint-button="hint-music">Подсказка по музыке</button>
+          <button class="ghost" type="button" data-hint-button="hint-music-answer">Почти ответ по музыке</button>
         </div>
-        <p class="hint" id="hint-media" hidden>Название Caesar Cipher говорит, какой декодер искать. Название Operator говорит, кто нужен в финале.</p>
+        <p class="hint" id="hint-video" hidden>Правильное видео связано с методом шифрования.</p>
+        <p class="hint" id="hint-video-answer" hidden>Нужный метод — Caesar Cipher.</p>
+        <p class="hint" id="hint-music" hidden>Правильный трек связан с финальным контактом.</p>
+        <p class="hint" id="hint-music-answer" hidden>Нужное слово — operator.</p>
       </section>
 
       <section aria-labelledby="go-trace">
         <h2 id="go-trace">Go trace</h2>
-        <p>Это похоже на исходник Go, но компилировать ничего не нужно. Иногда источник уже содержит всё, что нужно.</p>
+        <p>Это не поле для ввода и не задача на компиляцию. Этот блок нужно просто прочитать. В исходнике уже есть данные для следующего шага: revision и payload.</p>
         <pre><code>package main
 
 const birthday = "16.06"
@@ -332,13 +332,10 @@ const revision = 22
 var payload = "JVEKQIRX 1/3: WMKREP"
 
 func main() {
-  // not every answer needs a compiler
-  // sometimes source is enough
+// not every answer needs a compiler
+// sometimes source is enough
 }</code></pre>
-        <div class="row" style="margin-top: 16px;">
-          <button class="ghost" type="button" data-hint-button="hint-go">Подсказка</button>
-        </div>
-        <p class="hint" id="hint-go" hidden>Обрати внимание на payload и revision. Число 22 не случайно: это сдвиг для ROT / Цезаря.</p>
+        <p class="muted">revision = 22 — это сдвиг для ROT / Цезаря. payload — это строка, которую нужно декодировать ниже.</p>
       </section>
 
       <section aria-labelledby="rot">
@@ -395,9 +392,6 @@ func main() {
         </div>
       </section>
 
-      <section>
-        <p class="footer-note">BB_1606: signal restored. final handoff pending.</p>
-      </section>
     </div>
   </main>
 
