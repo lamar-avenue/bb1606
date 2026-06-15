@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BB_1606</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050607;
+      --panel: #0b0f10;
+      --panel-2: #101617;
+      --line: #263436;
+      --text: #d6e2de;
+      --muted: #8a9a97;
+      --green: #66ff99;
+      --green-dim: #2ca85b;
+      --amber: #ffd166;
+      --red: #ff5c7a;
+      --cyan: #7dd3fc;
+      --shadow: rgba(102, 255, 153, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(102, 255, 153, 0.035), transparent 28rem),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 4px),
+        var(--bg);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--cyan);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(125, 211, 252, 0.35);
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--green);
+      border-bottom-color: var(--green);
+      outline: none;
+    }
+
+    .shell {
+      width: min(1060px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .frame {
+      border: 1px solid var(--line);
+      background: rgba(5, 7, 8, 0.9);
+      box-shadow: 0 0 36px var(--shadow);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #070a0b;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--line);
+    }
+
+    .dot.red { background: var(--red); }
+    .dot.amber { background: var(--amber); }
+    .dot.green { background: var(--green-dim); }
+
+    header,
+    section {
+      padding: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child {
+      border-bottom: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 14px;
+      color: var(--green);
+      font-size: clamp(34px, 7vw, 76px);
+      line-height: 0.95;
+      letter-spacing: 0;
+      text-shadow: 0 0 18px rgba(102, 255, 153, 0.22);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: var(--green);
+      font-size: 21px;
+      letter-spacing: 0;
+    }
+
+    h2::before {
+      content: ">";
+      color: var(--amber);
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      color: var(--amber);
+      font-size: 16px;
+    }
+
+    .lead {
+      max-width: 760px;
+      color: #e7f2ee;
+      font-size: 18px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .status {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 14px;
+      min-height: 112px;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .value {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 16px 0 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: #020303;
+      color: #c7f8d4;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .tool {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    textarea,
+    input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: #030505;
+      color: var(--text);
+      font: inherit;
+      padding: 12px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--green-dim);
+      box-shadow: 0 0 0 2px rgba(102, 255, 153, 0.12);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .shift {
+      max-width: 120px;
+    }
+
+    button {
+      border: 1px solid var(--green-dim);
+      border-radius: 0;
+      background: #07110a;
+      color: var(--green);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      padding: 10px 14px;
+    }
+
+    button:hover,
+    button:focus-visible {
+      background: rgba(102, 255, 153, 0.12);
+      outline: none;
+    }
+
+    .ghost {
+      border-color: var(--line);
+      background: transparent;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .result,
+    .hint {
+      border-left: 3px solid var(--green-dim);
+      background: var(--panel-2);
+      padding: 12px 14px;
+      color: var(--text);
+    }
+
+    .result:empty,
+    .hint[hidden],
+    .final[hidden] {
+      display: none;
+    }
+
+    .hint {
+      border-left-color: var(--amber);
+      color: #f2e6c6;
+    }
+
+    .keyline {
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    .final {
+      margin-top: 18px;
+      border: 1px solid var(--green-dim);
+      background: rgba(6, 18, 10, 0.92);
+      box-shadow: 0 0 28px rgba(102, 255, 153, 0.14);
+      padding: 18px;
+    }
+
+    .operator-image {
+      display: block;
+      width: min(360px, 100%);
+      height: auto;
+      margin: 16px 0 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .image-missing {
+      display: none;
+      margin: 12px 0;
+      color: var(--muted);
+    }
+
+    .footer-note {
+      padding-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        width: min(100% - 20px, 1060px);
+        padding: 10px 0 32px;
+      }
+
+      header,
+      section {
+        padding: 18px;
+      }
+
+      .status-grid,
+      .media-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="frame" role="application" aria-label="BB_1606 terminal">
+      <div class="topbar">
+        <div class="dots" aria-hidden="true">
+          <span class="dot red"></span>
+          <span class="dot amber"></span>
+          <span class="dot green"></span>
+        </div>
+        <span>blackbox://bb_1606/final-handoff</span>
+        <span>status: signal waiting</span>
+      </div>
+
+      <header>
+        <h1>BB_1606</h1>
+        <p class="lead">Олег, с днём рождения. Это небольшой цифровой квест в духе Цикады 3310, но без лишних страданий.</p>
+        <p>В конце тебя ждёт финальный оператор, который вручит подарок. Компилятор Go не нужен: здесь достаточно внимания, пары декодеров и хорошего чувства сигнала.</p>
+      </header>
+
+      <section aria-labelledby="what">
+        <h2 id="what">Что происходит</h2>
+        <div class="status-grid">
+          <div class="status">
+            <span class="label">Цель</span>
+            <span class="value">восстановить финальный ключ доступа</span>
+          </div>
+          <div class="status">
+            <span class="label">Финал</span>
+            <span class="value">QR-код приведёт к оператору, который вручит подарок</span>
+          </div>
+          <div class="status">
+            <span class="label">Формат ключа</span>
+            <span class="value">fragment1-fragment2-fragment3</span>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="media">
+        <h2 id="media">Медиа-следы</h2>
+        <p>Среди видео нужно найти ролик, название которого подсказывает метод шифрования. Среди музыки нужно найти трек, название которого связано с финальным контактом.</p>
+        <div class="media-grid">
+          <div>
+            <h3>Видео</h3>
+            <ul>
+              <li><a href="https://www.youtube.com/watch?v=I2O7blSSzpI" target="_blank" rel="noopener noreferrer">Cicada 3301: An Internet Mystery</a></li>
+              <li><a href="https://www.youtube.com/watch?v=JtbKh_12ctg" target="_blank" rel="noopener noreferrer">Caesar Cipher</a></li>
+              <li><a href="https://www.youtube.com/watch?v=zWlI2ztER7o" target="_blank" rel="noopener noreferrer">UVB-76 / The Buzzer</a></li>
+              <li><a href="https://www.youtube.com/watch?v=e_Ue_P7vcRE" target="_blank" rel="noopener noreferrer">Aphex Twin - Blackbox Life Recorder 21f</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Музыка</h3>
+            <ul>
+              <li><a href="https://www.youtube.com/watch?v=b0q5PR1xpA0" target="_blank" rel="noopener noreferrer">LEMMiNO - Cipher</a></li>
+              <li><a href="https://www.youtube.com/watch?v=kyIvtzvxfhE" target="_blank" rel="noopener noreferrer">Aphex Twin - Blackbox Life Recorder 21f</a></li>
+              <li><a href="https://www.youtube.com/watch?v=khYxP7TiFSA" target="_blank" rel="noopener noreferrer">Jim Croce - Operator</a></li>
+              <li><a href="https://www.youtube.com/watch?v=D_8Pma1vHmw" target="_blank" rel="noopener noreferrer">Kraftwerk - The Robots</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 16px;">
+          <button class="ghost" type="button" data-hint-button="hint-media">Подсказка</button>
+        </div>
+        <p class="hint" id="hint-media" hidden>Название Caesar Cipher говорит, какой декодер искать. Название Operator говорит, кто нужен в финале.</p>
+      </section>
+
+      <section aria-labelledby="go-trace">
+        <h2 id="go-trace">Go trace</h2>
+        <p>Это похоже на исходник Go, но компилировать ничего не нужно. Иногда источник уже содержит всё, что нужно.</p>
+        <pre><code>package main
+
+const birthday = "16.06"
+const revision = 22
+
+var payload = "JVEKQIRX 1/3: WMKREP"
+
+func main() {
+  // not every answer needs a compiler
+  // sometimes source is enough
+}</code></pre>
+        <div class="row" style="margin-top: 16px;">
+          <button class="ghost" type="button" data-hint-button="hint-go">Подсказка</button>
+        </div>
+        <p class="hint" id="hint-go" hidden>Обрати внимание на payload и revision. Число 22 не случайно: это сдвиг для ROT / Цезаря.</p>
+      </section>
+
+      <section aria-labelledby="rot">
+        <h2 id="rot">ROT / Цезарь декодер</h2>
+        <div class="tool">
+          <label for="rot-input">Текст</label>
+          <textarea id="rot-input">JVEKQIRX 1/3: WMKREP</textarea>
+          <div class="row">
+            <label for="rot-shift">Сдвиг</label>
+            <input class="shift" id="rot-shift" type="number" min="0" max="25" value="22">
+            <button type="button" id="rot-button">Декодировать</button>
+            <button class="ghost" type="button" data-hint-button="hint-rot">Подсказка</button>
+          </div>
+          <div class="result" id="rot-result" aria-live="polite"></div>
+          <p class="hint" id="hint-rot" hidden>Для этого следа нужен сдвиг 22. После декодирования первый фрагмент будет SIGNAL.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="base64">
+        <h2 id="base64">Base64 декодер</h2>
+        <div class="tool">
+          <label for="base64-input">Текст</label>
+          <textarea id="base64-input">RlJBR01FTlQgMi8zOiByZXN0b3JlZA==</textarea>
+          <div class="row">
+            <button type="button" id="base64-button">Декодировать</button>
+            <button class="ghost" type="button" data-hint-button="hint-base64">Подсказка</button>
+          </div>
+          <div class="result" id="base64-result" aria-live="polite"></div>
+          <p class="hint" id="hint-base64" hidden>Base64 часто выглядит как строка с буквами, цифрами и знаками равно в конце. Здесь он отдаёт второй фрагмент.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="final-key">
+        <h2 id="final-key">Финальный ключ</h2>
+        <p>Третий фрагмент даёт музыка. Правильный трек связан с финальным контактом: <span class="keyline">Operator</span>.</p>
+        <p>Когда три фрагмента собраны, итоговый ключ выглядит так: <span class="keyline">signal-restored-operator</span>.</p>
+        <div class="tool">
+          <label for="key-input">Ключ доступа</label>
+          <input id="key-input" type="text" autocomplete="off" spellcheck="false" placeholder="fragment1-fragment2-fragment3">
+          <div class="row">
+            <button type="button" id="key-button">Проверить ключ</button>
+            <button class="ghost" type="button" data-hint-button="hint-key">Подсказка</button>
+          </div>
+          <div class="result" id="key-result" aria-live="polite"></div>
+          <p class="hint" id="hint-key" hidden>Собери слова из трёх следов маленькими буквами через дефис: signal-restored-operator.</p>
+        </div>
+
+        <div class="final" id="final-block" hidden>
+          <h3>Чёрный ящик восстановлен. Финальный оператор найден.</h3>
+          <img class="operator-image" id="operator-image" src="operator_1606.png" alt="QR-код финального оператора">
+          <p class="image-missing" id="image-missing">Файл operator_1606.png не найден рядом с index.html. Резервный канал ниже активен.</p>
+          <p class="keyline">Отправь оператору фразу доступа: BB-1606-22</p>
+          <p>Резервная ссылка на оператора: <a href="https://t.me/bakudo88" target="_blank" rel="noopener noreferrer">https://t.me/bakudo88</a></p>
+        </div>
+      </section>
+
+      <section>
+        <p class="footer-note">BB_1606: signal restored. final handoff pending.</p>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var finalKey = "signal-restored-operator";
+
+      function decodeRot(text, shift) {
+        var normalizedShift = ((shift % 26) + 26) % 26;
+        return text.replace(/[a-z]/gi, function (char) {
+          var base = char >= "a" && char <= "z" ? 97 : 65;
+          var code = char.charCodeAt(0) - base;
+          return String.fromCharCode(((code + normalizedShift) % 26) + base);
+        });
+      }
+
+      function decodeBase64(text) {
+        var binary = atob(text.trim());
+        var bytes = Uint8Array.from(binary, function (char) {
+          return char.charCodeAt(0);
+        });
+        return new TextDecoder("utf-8").decode(bytes);
+      }
+
+      function setResult(id, text) {
+        document.getElementById(id).textContent = text;
+      }
+
+      document.querySelectorAll("[data-hint-button]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var hint = document.getElementById(button.getAttribute("data-hint-button"));
+          var isHidden = hint.hasAttribute("hidden");
+          if (isHidden) {
+            hint.removeAttribute("hidden");
+            button.setAttribute("aria-expanded", "true");
+          } else {
+            hint.setAttribute("hidden", "");
+            button.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
+
+      document.getElementById("rot-button").addEventListener("click", function () {
+        var text = document.getElementById("rot-input").value;
+        var shift = Number(document.getElementById("rot-shift").value || 0);
+        setResult("rot-result", decodeRot(text, shift));
+      });
+
+      document.getElementById("base64-button").addEventListener("click", function () {
+        var text = document.getElementById("base64-input").value;
+        try {
+          setResult("base64-result", decodeBase64(text));
+        } catch (error) {
+          setResult("base64-result", "Не удалось декодировать Base64. Проверь строку и попробуй ещё раз.");
+        }
+      });
+
+      function checkKey() {
+        var input = document.getElementById("key-input");
+        var value = input.value.trim().toLowerCase();
+        var finalBlock = document.getElementById("final-block");
+        if (value === finalKey) {
+          setResult("key-result", "ACCESS GRANTED: final handoff unlocked.");
+          finalBlock.removeAttribute("hidden");
+          finalBlock.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          setResult("key-result", "ACCESS DENIED: ключ пока не совпадает.");
+          finalBlock.setAttribute("hidden", "");
+        }
+      }
+
+      document.getElementById("key-button").addEventListener("click", checkKey);
+      document.getElementById("key-input").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          checkKey();
+        }
+      });
+
+      document.getElementById("operator-image").addEventListener("error", function () {
+        this.style.display = "none";
+        document.getElementById("image-missing").style.display = "block";
+      });
+    }());
+  </script>
+</body>
+</html>
