@@ -289,6 +289,7 @@
       <section aria-labelledby="media">
         <h2 id="media">Медиа-следы</h2>
         <p>Среди ссылок есть нужные. Не все они ведут к ответу. Твоя задача — понять, какая ссылка подходит по смыслу к следующему шагу.</p>
+        <p class="muted">Здесь нужно найти два правильных следа: один среди видео, второй среди музыки. Видео подскажет метод шифрования, а музыка даст один из фрагментов финального ключа.</p>
         <div class="media-grid">
           <div>
             <h3>Видео</h3>
@@ -323,15 +324,7 @@
 
       <section aria-labelledby="go-trace">
         <h2 id="go-trace">Go trace</h2>
-        <p>Это не задача на знание Go. Код здесь используется как способ спрятать данные. Тебе нужно не запускать его, а вытащить из него нужные строки и число для сдвига.</p>
-        <div class="result">
-          <p><strong>Что нужно сделать:</strong></p>
-          <p>1. Просто прочитай код ниже. Компилировать его не нужно.</p>
-          <p>2. Найди объект, где Method: "rot". Скопируй значение Data из этого объекта в ROT / Цезарь декодер.</p>
-          <p>3. Найди объект, где Method: "base64". Скопируй значение Data из этого объекта в Base64 декодер.</p>
-          <p>4. Найди функцию shift(). Она показывает, как получить число для сдвига.</p>
-          <p>5. После декодирования ты получишь фрагменты финального ключа.</p>
-        </div>
+        <p>Просто прочитай код. Компилировать его не нужно. Внутри спрятаны строки для декодеров и число для сдвига.</p>
         <pre><code>package main
 
 const day = 16
@@ -373,6 +366,7 @@ func main() {
       <section aria-labelledby="rot">
         <h2 id="rot">ROT / Цезарь декодер</h2>
         <div class="tool">
+          <p class="muted">Скопируй сюда значение Data из объекта, где Method: "rot". Сдвиг возьми из функции shift() в Go trace.</p>
           <label for="rot-input">Текст</label>
           <textarea id="rot-input" placeholder='вставь строку с Method: "rot"'></textarea>
           <div class="row">
@@ -391,6 +385,7 @@ func main() {
       <section aria-labelledby="base64">
         <h2 id="base64">Base64 декодер</h2>
         <div class="tool">
+          <p class="muted">Скопируй сюда значение Data из объекта, где Method: "base64". Затем нажми “Декодировать”.</p>
           <label for="base64-input">Текст</label>
           <textarea id="base64-input" placeholder='вставь строку с Method: "base64"'></textarea>
           <div class="row">
@@ -408,6 +403,7 @@ func main() {
         <h2 id="final-key">Финальный ключ</h2>
         <p>Третий фрагмент даёт музыка. Правильный трек связан с финальным контактом: <span class="keyline">Operator</span>.</p>
         <p>Когда три фрагмента собраны, итоговый ключ выглядит так: <span class="keyline">signal-restored-operator</span>.</p>
+        <p class="muted">Собери три найденных фрагмента в один ключ через дефисы. Порядок: ROT → Base64 → музыка.</p>
         <div class="tool">
           <label for="key-input">Ключ доступа</label>
           <input id="key-input" type="text" autocomplete="off" spellcheck="false" placeholder="fragment1-fragment2-fragment3">
